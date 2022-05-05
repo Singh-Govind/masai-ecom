@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="nav">
+        <h1 id="Logo"><a href="index.html">Masai E-Comm</a></h1>
+        <div class="menu">
+            <p><a href="mens.html">Men</a></p>
+            <p><a href="womens.html">Women</a></p>
+            <p><a href="signin.html">Login</a></p>
+            <p><a href="signup.html">Signup</a></p>
+            <p><a href="cart.html">Cart</a></p>
+        </div>
+    </div>
+
+    <div id="total">
+        <h3></h3>
+        <h1></h1>
+        <div id="promo">
+            <input type="text" placeholder="Enter Promo Code">
+            <button>Apply</button>
+        </div>
+        <button id="payment"><a href="payment.html">Continue to Payment</a></button>
+    </div>
+
+    <div id="container">
+
+    </div>
+</body>
+</html>
+
+<script>
+    if(JSON.parse(localStorage.getItem("signin")) == null)
+    {
+        window.location.href="signin.html";
+    }
+
+    var products = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    if(products == "")
+    {
+        document.querySelector("#promo").setAttribute("class","hide");
+        var card = document.createElement("h1")
+        card.innerText = "Nothing to Show here🤷‍♂️";
+        document.querySelector("#total").append(card);
+
+    }
+    
+
+    display(products);
+
+  function display(products){
+    var total = 0;
+    var numberOfItems = 0;
+
+    document.querySelector("#container").innerHTML = null;
+
+    products.forEach(function(data,index){
+        
+
+        var card = document.createElement("div");
+        var image = document.createElement("img");
+        image.setAttribute("src",data.image_url);
+
+        var heading = document.createElement("h3");
+        heading.innerText = data.name;
+
+        var price = document.createElement("p");
+        price.innerText = data.price;
+
+        var strikePrice = document.createElement("p");
+        strikePrice.innerText = data.strikedoffprice;
+
+        var priceDiv = document.createElement("div");
+        priceDiv.append(price, strikePrice);
+
+        var deleteItem = document.createElement("button");
+        deleteItem.innerText = "Delete";
+        deleteItem.setAttribute("class","deleteBtn");
+        deleteItem.addEventListener("click", function(){
+            deleteItemFunc(data, index);
+        });
+
+
+        var minus = document.createElement("button");
+        minus.innerText = "-";
+        var plus = document.createElement("button");
+        plus.innerText = "+";
+        var itemsQuantity = document.createElement("span");
+        itemsQuantity.innerText = data.quantity;
+        plus.addEventListener("click",function(){
+            increaseItem(data,index);
+        });
+        minus.addEventListener("click", function(){
+            decreaseItem(data,index);
+        });
+
+        var cartQuantityAdder = document.createElement("div");
+        cartQuantityAdder.append(minus,itemsQuantity,plus);
+
+        numberOfItems++;
+        total += (Number(data.price)*data.quantity);
+        document.querySelector("#total>h1").innerText = "Total : " + total;
+        document.querySelector("#total>h3").innerText = "Number items : " + numberOfItems;
+
+
+        card.append(image,heading,priceDiv, cartQuantityAdder, deleteItem);
+
+        document.querySelector("#container").append(card);
+    });
+
+  }
+  
+  
+document.querySelector("#promo > button").addEventListener("click", applyPromo);
+
+function applyPromo(){
+    var promoCode = document.querySelector("#promo > input").value;
+    document.querySelector("#promo > input").setAttribute("class","hide");
+    document.querySelector("#promo > button").setAttribute("class","hide");
+
+    if(promoCode == "masai30")
+    {
+        var total = document.querySelector("#total>h1").innerText;
+        total = total.split(":");
+        total = +total[1];
+        total = total -  Math.ceil((30*total)/100);
+        document.querySelector("#total>h1").innerText = "Total : " + total;
+    }
+    else{
+        alert("wrong promocode");
+    }
+}
+
+
+</script>
+<script src="./js/main.js"></script>

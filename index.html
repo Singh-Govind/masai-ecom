@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="nav">
+        <h1 id="Logo"><a href="index.html">Masai E-Comm</a></h1>
+        <div class="menu">
+            <p><a href="mens.html">Men</a></p>
+            <p><a href="womens.html">Women</a></p>
+            <p><a href="signin.html">Login</a></p>
+            <p><a href="signup.html">Signup</a></p>
+            <p><a href="cart.html">Cart</a></p>
+        </div>
+    </div>
+
+    <div id="container">
+
+    </div>
+</body>
+</html>
+
+<script>
+    if(JSON.parse(localStorage.getItem("signin")) == null)
+    {
+        window.location.href="signin.html";
+    }
+
+    var products = JSON.parse(localStorage.getItem("womensproducts")) || [];
+
+    products.forEach(function(el){
+        display(el)
+    });
+
+    var products = JSON.parse(localStorage.getItem("mensproducts")) || [];
+
+    products.forEach(function(el){
+        display(el)
+    });
+
+  function display(data){
+    var card = document.createElement("div");
+    var image = document.createElement("img");
+    image.setAttribute("src",data.image_url);
+
+    var heading = document.createElement("h3");
+    heading.innerText = data.name;
+
+    var price = document.createElement("p");
+    price.innerText = data.price;
+
+    var strikePrice = document.createElement("p");
+    strikePrice.innerText = data.strikedoffprice;
+
+    var priceDiv = document.createElement("div");
+    priceDiv.append(price, strikePrice);
+
+    var addToCartBtn = document.createElement("button");
+    addToCartBtn.innerText = "Add to Cart";
+    addToCartBtn.addEventListener("click", function(){
+        addToCart(data);
+    });
+
+    card.append(image,heading,priceDiv, addToCartBtn);
+
+    document.querySelector("#container").append(card);
+  }
+</script>
+<script src="./js/main.js"></script>

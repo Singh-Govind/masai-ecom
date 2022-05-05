@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="./css/signup.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+</head>
+<body>
+    <div class="nav">
+        <h1 id="Logo"><a href="index.html">Masai E-Comm</a></h1>
+        <div class="menu">
+            <p><a href="mens.html">Men</a></p>
+            <p><a href="womens.html">Women</a></p>
+            <p><a href="signin.html">Login</a></p>
+            <p><a href="signup.html">Signup</a></p>
+        </div>
+    </div>
+
+    <form action="">
+        <input type="email" placeholder="email" id="email">
+        <input type="password" placeholder="password" id="password">
+        <input type="submit">
+    </form>
+</body>
+</html>
+
+<script>
+    var form = document.querySelector("form");
+    var userData = JSON.parse(localStorage.getItem("userData"));
+    if(JSON.parse(localStorage.getItem("signin")) != null)
+    {
+        window.location.href="index.html";
+    }
+
+    form.addEventListener("submit", function(){
+        event.preventDefault();
+
+        var data = {
+            email: form.email.value,
+            password: form.password.value
+        }
+
+        if(userData == null)
+            alert("Please Create and account");
+        else if(data.email == userData.email && data.password == userData.password)
+        {
+            localStorage.setItem("signin",JSON.stringify(data));
+            window.location.href="index.html";
+        }
+        else{
+            alert("user does not exists");
+        }
+
+    })
+</script>

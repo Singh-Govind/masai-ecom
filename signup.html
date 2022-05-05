@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="./css/signup.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+</head>
+<body>
+    <div class="nav">
+        <h1 id="Logo"><a href="index.html">Masai E-Comm</a></h1>
+        <div class="menu">
+            <p><a href="mens.html">Men</a></p>
+            <p><a href="womens.html">Women</a></p>
+            <p><a href="signin.html">Login</a></p>
+            <p><a href="signup.html">Signup</a></p>
+        </div>
+    </div>
+
+
+
+    <form action="">
+        <input type="text" placeholder="Username" id="username">
+        <input type="email" placeholder="email" id="email">
+        <input type="password" placeholder="password" id="password">
+        <input type="submit">
+    </form>
+</body>
+</html>
+
+<script>
+
+    if(JSON.parse(localStorage.getItem("signin")) != null)
+    {
+        window.location.href = "index.html";
+    }
+
+    var form = document.querySelector("form");
+
+    form.addEventListener("submit", function(){
+        event.preventDefault();
+
+        var data = {
+            username: form.username.value,
+            email: form.email.value,
+            password: form.password.value
+        }
+
+        localStorage.setItem("userData", JSON.stringify(data));
+        alert("Sign Success");
+    })
+</script>

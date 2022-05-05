@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+
+    <style>
+        body{
+            background-color: #001D6E;
+
+        }
+        .atm-card{
+            width: 50%;
+            margin: 100px auto;
+            background-color: #C4DDFF;
+        }
+
+        #atmcard{
+            width: 60%;
+            margin: auto;
+            padding: 100px;
+        }
+        #atmcard > input{
+            box-sizing: border-box;
+            font-size: 24px;
+            width: 100%;
+            display: block;
+            margin-bottom: 16px;
+            height: 70px;
+            border: 0;
+            padding-left: 15px;
+        }
+        #atmcard > input:last-child{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="atm-card">
+        <form id="atmcard">
+            <input type="text" id="name" placeholder="Enter Name">
+            <input type="number" id="number" placeholder="Enter Card Number">
+            <input type="number" id="cvv" placeholder="Enter CVV">
+            <input type="number" id="expiry" placeholder="expiry Year">
+            <input type="submit">
+        </form>
+    </div>
+</body>
+</html>
+
+<script>
+    document.querySelector("#atmcard").addEventListener("submit", paymentGate);
+
+    var cardName = "someone";
+    var cardNumber = "455111557864";
+    var cardCVV = "065";
+    var cardExpiry = "2028";
+
+    function paymentGate(){
+        event.preventDefault();
+
+        var name = atmcard.name.value;
+        name = name.toLowerCase();
+        var number = (atmcard.number.value);
+        var cvv = (atmcard.cvv.value);
+        var expiry = (atmcard.expiry.value);
+
+
+        if(name == "" || number == "" || cvv == "" || expiry == "") alert("Please enter all the details");
+        else{
+            if(name == cardName && number == cardNumber && cvv == cardCVV && expiry == cardExpiry)
+            {
+                window.location.href = "OTP.html";
+            }
+            else
+            {
+                alert("Wrong Information");
+            }
+        }
+    }
+</script>
